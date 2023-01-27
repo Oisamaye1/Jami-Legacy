@@ -1,0 +1,52 @@
+{% extends "templates.html" %} {% block title %} Jami Legacy - Footware {% endblock %} {% block
+main %}
+
+<div class="jumbotron">
+  <div class="container-fluid contain py-5">
+    <h1 class="display-5 fw-bold">The Deal of the Century</h1>
+    <p class="col-md-8 fs-4">
+        Step into style with our unbeatable selection of shoes at prices that won't break the bank.
+    </p>
+    <button type="button">Shop Now</button>
+  </div>
+</div>
+<br />
+<br />
+
+<div class="new-features contain">
+  <span><i class="fa-solid fa-truck-fast"></i> <p>Fast Delivery</p> </span>
+  <span><i class="fa-sharp fa-solid fa-credit-card"></i><p>Online Order</p></span>
+  <span><i class="fa-solid fa-piggy-bank"></i><p>Save Money</p></span>
+  <span><i class="fa-solid fa-ticket"></i><p>Promotions</p></span>
+  <span><i class="fa-solid fa-face-smile"></i><p>Happy Customers</p></span>
+  <span><i class="fa-solid fa-headset"></i><p>24/7 Support</p></span>
+</div>
+
+<div class="products-main-box">
+  <h2>Featured Products</h2>
+  <div class="product-container container">
+    {% for product in products %}
+    <div class="product-box">
+      <div class="prod-img">
+        <img class="" src="{{product["image"]}}" alt="product images">
+      </div>
+      <div class="prod-info">
+        <h3>{{product["name"]}}</h3>
+        <h3>{{product["sex"]}}</h3>
+        <h4>{{product["brand"]}}</h4>
+        <h5>${{product["price"]}}</h5>
+        <form action="#" method="get">
+            <i class="fa-solid product-box-cart fa-cart-shopping"></i>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="hero-card">
+      <h5>Too Big for your boots...</h5>
+      <p>Discover the legacy of fashion with Jami Legacy Shoes: quality, comfort, and style at affordable prices.</p>
+</div>
+
+{% endblock %}

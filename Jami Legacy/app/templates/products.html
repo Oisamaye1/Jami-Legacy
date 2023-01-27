@@ -1,0 +1,32 @@
+{% extends "templates.html" %}
+{% block title %} Products {% endblock %}
+
+{% block main %} 
+<div class="hero-card product-page-banner">
+    <h1>Products</h1>
+    <p>Elevate your shoe game with Jami Legacy Shoes - designed with both style and comfort in mind. 
+        Shop now and step up your footwear collection.</p>
+</div>
+
+<div class="products-main-box">
+<div class="product-container container">
+{% for product in products %}
+<div class="product-box">
+    <div class="prod-img">
+        <img class="" src="{{product["image"]}}" alt="product images">
+    </div>
+    <div class="prod-info">
+        <h3>{{product["name"]}}</h3>
+        <h3>{{product["sex"]}}</h3>
+        <h4>{{product["brand"]}}</h4>
+        <h5>${{product["price"]}}</h5>
+        <form action="#" method="get">
+            <i class="fa-solid product-box-cart fa-cart-shopping"></i>
+        </form>
+    </div>
+
+</div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}

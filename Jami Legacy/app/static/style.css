@@ -1,0 +1,307 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: rgb(238, 238, 238);
+}
+
+.under-nav a{
+    color: white;
+}
+
+.under-nav a:hover{
+    color: orangered;
+}
+
+#search .searchbar{
+    background: rgb(206, 206, 206);
+    position: relative;
+    height: 40px;
+    border-radius: 30px;
+    padding: 10px 13px;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    color: rgb(59, 59, 59);
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.281);
+}
+
+#search .searchbar:hover input{
+    width: 200px;
+    cursor: pointer;
+    margin-left: 3px;
+    position: initial;
+    color: rgb(59, 59, 59);
+    transition: 0.5s;
+}
+
+#search .searchbar .fa-solid{
+    color: rgb(255, 255, 255);
+}
+
+#search .searchbar input{
+    background: transparent;
+    position: absolute;
+    border: none;
+    outline: none;
+    width: 0px;
+    margin: 0px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.contain{
+    padding-left: 50px;
+    padding-right: 50px;
+
+}
+.container{
+    max-width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.jumbotron{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://media.finishline.com/i/finishline/CU4495_018_M1?$default$&w=671&&h=671&bg=rgb(237,237,237)");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.new-features{
+    display: flex;
+    gap: 10%;
+    justify-content: center;
+    flex-shrink: 1;
+}
+
+.new-features span{
+    text-align: center;
+  
+}
+
+.new-features i{
+    font-size: 50px;
+}
+
+.new-features p{
+    font-weight: bold;
+}
+
+.products-main-box{
+    background-color: rgb(255, 255, 255);
+    padding: 40px 0px;
+}
+.products-main-box h2{
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 40px;
+}
+
+.product-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.product-container .product-box{
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
+.product-container .product-box:hover{
+    box-shadow: 10px 10px 20px rgba(156, 156, 156, 0.397);
+    transition: 0.3s;
+}
+
+.product-box .prod-img img{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.prod-info{
+padding: 5px 10px;
+position: relative;
+}
+
+.prod-info h3{
+    font-size: 18px;
+    color: rgb(138, 138, 138);
+}
+
+.prod-info h5{
+    color: orangered;
+   
+}
+
+.prod-info .product-box-cart{
+    padding: 5px 15px;
+    color: orangered;
+    font-size: 25px;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+.prod-info .product-box-cart:hover{
+    font-size: 30px;
+}
+
+button{
+    outline: none;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: orangered;
+    color: white;
+    border: 1px transparent solid;
+}
+
+button:hover{
+    background-color: transparent;
+    color: orangered;
+    border: 1px orangered solid;
+}
+
+.hero-card{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.623), rgba(0, 0, 0, 0.637)), url(https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1253,c_limit/46a45ef0-cad7-4d75-91db-658896079c0e/the-best-nike-platform-sneakers.jpg);
+    background-size: cover;
+    text-align: center;
+    padding: 100px 0px;
+}
+
+.hero-card h5{
+    color: white;
+    font-size: 30px;
+}
+
+.hero-card p{
+    color: white;
+}
+
+#newsletter{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #041e42;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+#newsletter .form{
+    display: flex;
+    width: 40%;
+}
+
+#newsletter h4{
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+}
+
+#newsletter p{
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(245, 245, 245);
+}
+
+#newsletter span{
+    color: orangered;
+}
+
+#newsletter input{
+    padding: 10px 20px;
+    font-size: 14px;
+    width: 100%;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+#newsletter button{
+    white-space: nowrap;
+    border-radius: 0 4px 4px 0;
+}
+
+.footertop{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.footertop .footercol{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.footertop .flogo{
+    margin-bottom: 20px;
+}
+
+.footertop h4{
+    font-size: 18px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.footertop p{
+    font-size: 13px;
+    margin:0 0 8px 0;
+}
+
+.footertop a{
+    font-size: 13px;
+    text-decoration: none;
+    color: rgb(39, 39, 39);
+    margin:0 0 8px 0;
+}
+
+.footertop a:hover{
+    color: rgb(114, 114, 114);
+}
+
+.footertop a i{
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.footertop i:hover{
+    color: orangered;
+}
+
+.footertop .install a img{
+    margin: -30px 0px -20px -30px;
+}
+
+.copyright{
+    background-color: orangered;
+}
+
+.copyright p{
+    text-align: center;
+    font-size: 14px;
+    padding: 10px 0;
+    margin-bottom: 0;
+    color: rgb(255, 255, 255);
+}
+
+/* ------------------Product Page------------------------ */
+
+
+.product-page-banner{
+    color: white;
+}
