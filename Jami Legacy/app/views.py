@@ -1,8 +1,13 @@
-from app import app
-from flask import render_template
+from app import app, db
+from flask import render_template, request, redirect, flash, url_for
 import random
+from datetime import datetime
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField, EmailField
+from wtforms.validators import DataRequired, Length, Email
 
-data = [
+
+productInfo = [
   {
     "name": "MEN'S NIKE AIR FORCE 1",
     "price": "100",
@@ -75,14 +80,51 @@ data = [
     }
 ]
 
+class Users(db.Model):
+  __tablename__ = "users"
+  id = db.Column('student_id', db.Integer, primary_key = True)
+  firstname = db.Column("first_name",  db.String(40))
+  lastname = db.Column("last_name",  db.String(40))
+  username = db.Column("username",  db.String(40), unique=True)
+  password = db.Column("password", db.String(30))
+  email = db.Column("email", db.String(30))
+
+def __init__(self, firstname, lastname, username, password, email):
+   self.firstname = firstname
+   self.lastname = lastname
+   self.username = username
+   self.password = password
+   self.email = email
+
+def __str__(self):
+        return '<User %r>' % [self.firstname, self.lastname, self.username, self.password, self.email]
+
+class Login(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=8, max=30)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=30)])
+    submit = SubmitField('Submit')
+
+class Signup(FlaskForm):
+    firstname = StringField('First Name', validators=[DataRequired(), Length(max=30)])
+    lastname = StringField('Last Name', validators=[DataRequired(), Length(max=30)])
+    username = StringField('Username', validators=[DataRequired(), Length(min=8, max=30)])
+    email = EmailField('Email Address', validators=[DataRequired(), Email(), Length(max=30)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=80)])
+    submit = SubmitField('Submit')
+
+currentUser = None
+
 @app.route("/")
 def index():
-    products = data
-    return render_template("index.html", products= products)
+    products = productInfo
+    currentUser = username
+    return render_template("index.html", products= products,
+    current_time = datetime.utcnow())
 
 @app.route("/products")
 def products():
-    products = data
+    products = productInfo
+    
     return render_template("products.html", products= products)
 
 @app.route("/carts")
@@ -90,8 +132,46 @@ def cart():
     return render_template("carts.html")
 
 
-name = "Benjamin"
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    page = name
-    return render_template('login.html', page= page)
+  username = ""
+  form = Login()
+  if request.method == 'POST' and form.validate():
+
+    if Users.query.filter_by(username=form.username.data).all() and Users.query.filter_by(password=form.password.data).all():
+      username = form.username.data
+      return username, redirect("/")
+
+    else:
+      flash("Incorrect username or password")
+      
+  return render_template('login.html', username=username, form = form)
+
+@app.route('/signup', methods=["GET", "POST"])
+def signup():
+  username = ""
+  form = Signup()
+
+  if request.method == 'POST' and form.validate():
+    if Users.query.filter_by(username=form.username.data).all():
+      flash("Username already exist")
+    
+    else:
+      username = form.username.data
+      new_users = Users(firstname=form.firstname.data, lastname=form.lastname.data, username=form.username.data, password=form.password.data, email=form.email.data)
+      db.session.add(new_users)
+      db.session.commit()
+  return render_template('signup.html', username=username, form = form)
+
+@app.route('/profile/<username>')
+def profile(username):
+  user = get_user_from_database(username)
+
+  return render_template('profile.html', user = user )
+
+
+def get_user_from_database(user_name):
+    user = [user for user in Users.query.filter_by(username=user_name).all() 
+    if user.username == user_name]
+    return user[0] if user else None
+

@@ -1,12 +1,12 @@
-{% extends "templates.html" %}
-{% block title %} Login {% endblock %}
+{% extends "templates.html" %} {% block title %} Jami Legacy - Signup {% endblock %} 
+{% block main %}
 
 
-{% block main %} 
 <br>
 <br>
 
 <div class="container" style="width: 70vw;">
+
     {% for message in get_flashed_messages() %}
     <div class="alert alert-success" role="alert">
         <button  class="close button" style="display: none;" data-dimiss="alert"></button>
@@ -17,13 +17,22 @@
 
     <div class="row">
         <div class="col">
-            <h1 class="text-center">Log in</h1>
+            <h1 class="text-center">Create Account</h1>
             <br>
-            <form action="/login" method="post">
+            <form action="/signup" method="post">
                 {{ form.hidden_tag() }}
 
+                {{ form.firstname.label(class="form-label") }}
+                {{ form.firstname(class="form-control") }}
+                <br>
+                {{ form.lastname.label(class="form-label") }}
+                {{ form.lastname(class="form-control") }}
+                <br>
                 {{ form.username.label(class="form-label") }}
                 {{ form.username(class="form-control") }}
+                <br>
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
                 <br>
                 {{ form.password.label(class="form-label") }}
                 {{ form.password(class="form-control") }}
@@ -32,11 +41,10 @@
                 <br>
             </form>
             <br>
-            <p>Forgot password? <a href="#">Reset Password</a></p>
-            <br>
-            <p class="text-center">Don't have an account? <a href="/signup">Sign up</a></p>
+            <p class="text-center">Already have an account? <a href="/login">Login</a></p>
             <br>
         </div>
     </div>
 </div>
+
 {% endblock %}

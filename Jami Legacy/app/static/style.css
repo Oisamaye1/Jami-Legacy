@@ -7,6 +7,9 @@ body{
     background-color: rgb(238, 238, 238);
 }
 
+.under-nav{
+    background-color: #090909;
+}
 .under-nav a{
     color: white;
 }
@@ -16,16 +19,16 @@ body{
 }
 
 #search .searchbar{
-    background: rgb(206, 206, 206);
+    background: #090909;
     position: relative;
     height: 40px;
     border-radius: 30px;
     padding: 10px 13px;
-    margin: 0px;
+    margin-right: 10px;
     display: flex;
     align-items: center;
-    color: rgb(59, 59, 59);
-    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.281);
+    color: #090909;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.137);
 }
 
 #search .searchbar:hover input{
@@ -33,7 +36,7 @@ body{
     cursor: pointer;
     margin-left: 3px;
     position: initial;
-    color: rgb(59, 59, 59);
+    color: rgb(187, 187, 187);
     transition: 0.5s;
 }
 
@@ -52,16 +55,15 @@ body{
     font-size: 14px;
 }
 
+.nav-icon{
+    font-size: 25px;
+    color: #090909;
+}
+
 .contain{
     padding-left: 50px;
     padding-right: 50px;
 
-}
-.container{
-    max-width: 90%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
 }
 
 .jumbotron{
@@ -69,6 +71,7 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    width: 100%;
     display: flex;
     align-items: center;
     color: white;
@@ -77,27 +80,22 @@ body{
 .new-features{
     display: flex;
     gap: 10%;
-    justify-content: center;
-    flex-shrink: 1;
-}
-
-.new-features span{
     text-align: center;
-  
+    color: rgb(138, 138, 138);
+    padding: 0 10px;
+    flex-wrap: wrap;
+    width: 100vw;
 }
 
 .new-features i{
-    font-size: 50px;
-}
-
-.new-features p{
-    font-weight: bold;
+    font-size: 1.8em;
 }
 
 .products-main-box{
     background-color: rgb(255, 255, 255);
     padding: 40px 0px;
 }
+
 .products-main-box h2{
     text-align: center;
     margin-bottom: 40px;
@@ -107,15 +105,17 @@ body{
 .product-container{
     display: flex;
     flex-wrap: wrap;
-    gap: 50px;
+    justify-content: center;
+    gap: 3%;
 }
 
-.product-container .product-box{
+.product-box{
     background-color: rgb(255, 255, 255);
     border-radius: 5px;
+    margin: 10px 0px;
 }
 
-.product-container .product-box:hover{
+.product-box:hover{
     box-shadow: 10px 10px 20px rgba(156, 156, 156, 0.397);
     transition: 0.3s;
 }
@@ -154,7 +154,7 @@ position: relative;
     font-size: 30px;
 }
 
-button{
+.button{
     outline: none;
     border: none;
     font-weight: bold;
@@ -165,7 +165,7 @@ button{
     border: 1px transparent solid;
 }
 
-button:hover{
+.button:hover{
     background-color: transparent;
     color: orangered;
     border: 1px orangered solid;
@@ -192,7 +192,7 @@ button:hover{
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
-    background-color: #041e42;
+    background-color: #090909;
     padding-top: 50px;
     padding-bottom: 50px;
 }
@@ -264,7 +264,7 @@ button:hover{
 }
 
 .footertop a{
-    font-size: 13px;
+    font-size: 14px;
     text-decoration: none;
     color: rgb(39, 39, 39);
     margin:0 0 8px 0;
