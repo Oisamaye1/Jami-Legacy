@@ -1,6 +1,8 @@
 from app import app, db
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash, url_for, session
 import random
+import json
+from sqlalchemy.inspection import inspect
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, EmailField
@@ -80,7 +82,16 @@ productInfo = [
     }
 ]
 
-class Users(db.Model):
+class Serializer(object):
+
+    def serialize(self):
+        return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+
+    @staticmethod
+    def serialize_list(l):
+        return [m.serialize() for m in l]
+
+class Users(db.Model, Serializer):
   __tablename__ = "users"
   id = db.Column('student_id', db.Integer, primary_key = True)
   firstname = db.Column("first_name",  db.String(40))
@@ -88,6 +99,10 @@ class Users(db.Model):
   username = db.Column("username",  db.String(40), unique=True)
   password = db.Column("password", db.String(30))
   email = db.Column("email", db.String(30))
+
+def serialize(self):
+        d = Serializer.serialize(self)
+        return d
 
 def __init__(self, firstname, lastname, username, password, email):
    self.firstname = firstname
@@ -112,24 +127,32 @@ class Signup(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=80)])
     submit = SubmitField('Submit')
 
-currentUser = None
 
 @app.route("/")
 def index():
-    products = productInfo
-    currentUser = username
-    return render_template("index.html", products= products,
-    current_time = datetime.utcnow())
+  products = productInfo
+  user = None
+  if session.get("USERNAME", None) is not None:
+    user = session.get("USERNAME")
+  
+  return render_template("index.html", user = user, products= products,
+  current_time = datetime.utcnow())
 
 @app.route("/products")
 def products():
     products = productInfo
+    user = None
+    if session.get("USERNAME", None) is not None:
+      user = session.get("USERNAME")
     
-    return render_template("products.html", products= products)
+    return render_template("products.html", user = user, products= products)
 
 @app.route("/carts")
 def cart():
-    return render_template("carts.html")
+  user = None
+  if session.get("USERNAME", None) is not None:
+    user = session.get("USERNAME")
+  return render_template("carts.html", user=user)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -140,11 +163,14 @@ def login():
 
     if Users.query.filter_by(username=form.username.data).all() and Users.query.filter_by(password=form.password.data).all():
       username = form.username.data
-      return username, redirect("/")
+      current_user = get_user_from_database(username)
+      session["USERNAME"] = current_user["username"]
+      return redirect(url_for("profile"))
 
     else:
       flash("Incorrect username or password")
-      
+      return redirect(request.url)
+
   return render_template('login.html', username=username, form = form)
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -155,23 +181,38 @@ def signup():
   if request.method == 'POST' and form.validate():
     if Users.query.filter_by(username=form.username.data).all():
       flash("Username already exist")
+      return redirect(request.url)
     
     else:
       username = form.username.data
       new_users = Users(firstname=form.firstname.data, lastname=form.lastname.data, username=form.username.data, password=form.password.data, email=form.email.data)
       db.session.add(new_users)
       db.session.commit()
+      flash("Account created successfully!")
+      return redirect(request.url)
   return render_template('signup.html', username=username, form = form)
 
-@app.route('/profile/<username>')
-def profile(username):
-  user = get_user_from_database(username)
+@app.route('/logout')
+def logout():
+  session.pop("USERNAME", None)
+  return redirect(url_for("login"))
 
-  return render_template('profile.html', user = user )
+
+@app.route('/profile')
+def profile():
+  if session.get("USERNAME", None) is not None:
+    username = session.get("USERNAME")
+    cUser = get_user_from_database(username)
+    user = cUser
+    return render_template('profile.html', user = user )
+
+  else:
+    print("User not in session")
+    return redirect(url_for(login))
 
 
-def get_user_from_database(user_name):
-    user = [user for user in Users.query.filter_by(username=user_name).all() 
-    if user.username == user_name]
-    return user[0] if user else None
-
+def get_user_from_database(username):
+    user = [user for user in Users.query.filter_by(username=username).all() 
+    if user.username == username]
+    uss = Users.serialize_list(user)
+    return uss[0]  if user else None

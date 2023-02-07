@@ -61,7 +61,7 @@
               </div>
           </form>
 
-          {% if username %}
+          {% if user %}
           
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
@@ -69,8 +69,8 @@
                   Account
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item" href="/profile/<username>">Profile</a></li>
-                  
+                  <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
                 </ul>
               </li>
             </ul>
