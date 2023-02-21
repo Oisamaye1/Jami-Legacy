@@ -2,7 +2,7 @@
 main %}
 {% import "macros.html" as macro %}
 
-<div class="jumbotron ">
+<div class="jumbotron">
   <div class="contain">
     <h1 class="display-5 fw-bold">The Deal of the Century</h1>
     <p class="col-md-8 fs-4">
@@ -12,7 +12,7 @@ main %}
     <button class="button" type="button">Shop Now</button>
   </div>
 </div>
-<br>
+<br><br><br><br>
 
 <div class="new-features container">
   <span><i class="fa-solid fa-truck-fast"></i> <p>Fast Delivery</p> </span>
@@ -22,14 +22,55 @@ main %}
   <span><i class="fa-solid fa-face-smile"></i><p>Happy Customers</p></span>
   <span><i class="fa-solid fa-headset"></i><p>24/7 Support</p></span>
 </div>
+<br><br><br><br>
 
-<div class="products-main-box">
-  <h2>Featured Products</h2>
+
+<!-- Featured products -->
+
+<div class="products-main-box container">
+
+  <div class="sort-item">
+    <form action="/" method="post">
+
+      <div class="dropdown-center">
+        <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          Brand
+        </button>
+        <ul class="dropdown-menu">
+          <li><button type="checkbox" name="sort brand" value="Nike">Nike</button></li>
+          <li><button type="checkbox" name="sort brand" value="Adidas">Adidas</button></li>
+          <li><button type="checkbox" name="sort brand" value="Jordans">Jordans</button></li>
+          <li><button type="checkbox" name="sort brand" value="New Balance">New Balance</button></li>
+          <li><button type="checkbox" name="sort brand" value="Converse">Converse</button></li>
+          <li><button type="checkbox" name="sort brand" value="Timberland">Timberland</button></li>
+        </ul>
+      </div>
+    </form>
+
+    <form action="/" method="post">
+      <div class="dropdown-center">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Gender
+        </button>
+        <ul class="dropdown-menu">
+          <li><button type="checkbox" name="sort sex" value="Male">Male</button></li>
+          <li><button type="checkbox" name="sort sex" value="Female">Female</button></li>
+        </ul>
+      </div>
+
+      
+    </form>
+  </div>
+
+  <h2 class="fw-bold">Featured Products</h2>
   <div class="product-container">
     {% for product in products %}
+
       {{ macro.product(image=product["image"], name=product["name"], sex=product["sex"], brand=product["brand"], price=product["price"]) }}
-    {% endfor %}
+
+    {% endfor %}  
   </div>
+
 </div>
 
 <div class="hero-card">

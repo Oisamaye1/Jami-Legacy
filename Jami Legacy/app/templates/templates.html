@@ -15,7 +15,7 @@
     />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg sticky-top contain bg-light">
+    <nav class="navbar navbar-expand-lg sticky-top contain">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">
           <img
@@ -47,10 +47,10 @@
               <a class="nav-link" href="/products">Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Men Shoes</a>
+              <a class="nav-link" href="#">For Men</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Women Shoes</a>
+              <a class="nav-link" href="#">For Women</a>
             </li>
           </ul>
 
@@ -61,7 +61,7 @@
               </div>
           </form>
 
-          {% if user %}
+          {% if session["USERNAME"] %}
           
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
@@ -69,7 +69,7 @@
                   Account
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('profile', username=session['USERNAME'])}}">Profile</a></li>
                   <li><a class="dropdown-item" href="/logout">Logout</a></li>
                 </ul>
               </li>
@@ -92,18 +92,18 @@
       </div>
     </nav>
 
-    <ul class="nav under-nav justify-content-end contain bg-dark">
+    <ul class="nav under-nav justify-content-end contain">
       <li class="nav-item">
-        <a class="nav-link" href="#">Brands</a>
+        <a class="nav-link" href="/brands">Brands</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Wishlist</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About Us</a>
+        <a class="nav-link" href="/about-us">About Us</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Contact Us</a>
+        <a class="nav-link" href="/contact-us">Contact Us</a>
       </li>
     </ul>
   
@@ -116,7 +116,7 @@
     <H4>Sign Up For Newsletters</H4>
     <p>Get E-mail updates on all our latest deals and <span> special offers. </span></p>
   </div>
-  <form class="form">
+  <form method="post" class="form">
     <input type="text" placeholder="Your E-mail Address">
     <button class="button">Sign Up</button>
   </form>
@@ -146,16 +146,15 @@
     
     <div class="footercol">
       <h4>About</h4>
-      <a href="#">About Us</a>
+      <a href="/about-us">About Us</a>
       <a href="#">Delivery Information</a>
       <a href="#">Privacy Policy</a>
       <a href="#">Terms and Conditions</a>
-      <a href="#">Contact Us</a>
+      <a href="/contact-us">Contact Us</a>
     </div>
     
     <div class="footercol">
       <h4>My Account</h4>
-      <a href="#">Sign In</a>
       <a href="#">View Cart</a>
       <a href="#">My Wishlist</a>
       <a href="#">Track My Order</a>

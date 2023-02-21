@@ -1,6 +1,6 @@
 {% extends "templates.html" %}
 {% import "macros.html" as macro %}
-{% block title %} Products {% endblock %}
+{% block title %} Jami Legacy - Products {% endblock %}
 
 {% block main %}
 <div class="hero-card product-page-banner">
@@ -10,11 +10,11 @@
 </div>
 
 
-<div class="products-main-box">
-<div class="product-container">
-{% for product in products %}
-{{ macro.product(image=product["image"], name=product["name"], sex=product["sex"], brand=product["brand"], price=product["price"]) }}
-{% endfor %}
-</div>
+<div class="products-main-box container">
+    <div class="product-container">
+        {% for product in products %}
+        {{ macro.product(image=product["image"], name=product["name"], sex=product["sex"], brand=product["brand"], price=product["price"]) }}
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

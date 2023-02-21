@@ -1,0 +1,55 @@
+{% extends "templates.html" %} 
+{% import "macros.html" as macro %}
+{% block title %} Jami Legacy - Brands {% endblock %} 
+
+{% block main %}
+<div class="brand-card">
+    <h1>Brands</h1>
+    <p>Elevate your shoe game with Jami Legacy Shoes - designed with both style and comfort in mind. 
+        Shop now and step up your footwear collection.</p>
+</div>
+
+
+
+<div class="brand-box container">
+    <div class="row">
+        <div class="coll">
+            <a href="{{url_for('brands_sort', brandname='Nike')}}">
+                <img src="https://www.transparentpng.com/thumb/nike-logo/MoOjzC-black-logo-nike-background.png" alt="black logo nike background @transparentpng.com">
+            </a>
+        </div>
+        <div class="coll">
+            <a href="{{url_for('brands_sort', brandname='Adidas')}}">
+                <img src="https://www.transparentpng.com/thumb/adidas-logo/hd-adidas-logo-clipart-3.png" alt="hd adidas logo clipart @transparentpng.com">
+            </a>
+        </div>
+        <div class="coll">
+            <a href="{{url_for('brands_sort', brandname='Jordans')}}">
+                <img src="https://www.transparentpng.com/thumb/michael-jordan/clipart-michael-jordan-photos-png-16.png" alt="clipart michael jordan photos png @transparentpng.com">
+            </a>
+        </div>
+        <div class="coll">
+            <a href="{{url_for('brands_sort', brandname='Converse')}}">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Converse_shoe_company_logo.png" alt="black logo nike background @transparentpng.com">
+            </a>
+        </div>
+        <div class="coll">
+            <a href="{{url_for('brands_sort', brandname='New Balance')}}">
+                <img src="https://cdn.freebiesupply.com/logos/large/2x/new-balance-2-logo-png-transparent.png" alt="black logo nike background @transparentpng.com">
+            </a>
+        </div>
+        <div class="coll">
+            <a href="{{url_for('brands_sort', brandname='Timberland')}}">
+                <img src="https://logos-world.net/wp-content/uploads/2020/05/Timberland-Logo.png" alt="black logo nike background @transparentpng.com">
+            </a>
+        </div>
+    </div>
+</div>
+
+
+        {% for product in products %}
+        {{product["brand"]}}
+        {% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "templates.html" %} 
+{% block title %} Jami Legacy - Contact Us {% endblock %} 
+{% block main %}
+<br><br>
+<div class="about-us text-center container">
+    <h1 class="fw-bold">Contact Us</h1>
+</div>
+<br><br>
+<section class="container">
+    <div class="mission-box">
+        <div class="mission-text">
+            <h2 class="fw-bold">Get In Touch With Us</h2>
+            <br>
+            <p>We value your feedback and are always looking for ways to improve our products and services. Please don't hesitate to reach out to us if you have any comments, suggestions, or concerns. We are committed to ensuring that our customers are satisfied with their purchases and the overall Jami Legacy experience.</p>
+            <br>
+
+            <div class="contact-info">
+                <span><i class="fa-solid fa-house"></i></span> 
+                <span>
+                    <h5 class="fw-bold">Our Location</h5>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                </span>
+            </div>
+            <br>
+            <div class="contact-info">
+                <span><i class="fa-solid fa-phone"></i></span> 
+                <span>
+                    <h5 class="fw-bold">Phone Number</h5>
+                    <p>+1234567890</p>
+                </span>
+            </div>
+            <br>
+            <div class="contact-info">
+                <span><i class="fa-solid fa-envelope"></i></span> 
+                <span>
+                    <h5 class="fw-bold">Email Address</h5>
+                    <p>Example@email.com</p>
+                </span>
+            </div>    
+        </div>
+
+
+        <div class="contact-form">
+            <form action="/contact" method="post">
+                {{ form.hidden_tag() }}
+
+                {{ form.yourname.label(class="form-label") }}
+                {{ form.yourname(class="form-control") }}
+                <br>
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+                <br>
+                {{ form.subject.label(class="form-label") }}
+                {{ form.subject(class="form-control") }}
+                <br>
+                {{ form.message.label(class="form-label") }}
+                {{ form.message(class="form-control") }}
+                <br>
+                {{ form.submit(class="btn") }}
+                <br>
+            </form>
+        </div>
+    </div>
+        
+    </div>
+</section>
+{% endblock %}

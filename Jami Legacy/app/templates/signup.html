@@ -1,11 +1,9 @@
-{% extends "templates.html" %} {% block title %} Jami Legacy - Signup {% endblock %} 
+{% extends "templates.html" %} {% block title %} Jami Legacy - Login/Signup {% endblock %} 
 {% block main %}
 
-
-<br>
 <br>
 
-<div class="container" style="width: 70vw;">
+<div class="container form-box">
 
     {% for message in get_flashed_messages() %}
     <div class="alert alert-success" role="alert">
@@ -17,7 +15,16 @@
 
     <div class="row">
         <div class="col">
-            <h1 class="text-center">Create Account</h1>
+            
+
+            {% if request.endpoint == 'signup' %}
+            
+            <div class="login-signup-btn">
+                <a class="active" href="/signup">Signup</a>
+                <a href="/login">Login</a>
+            </div>
+            <br>
+            <h1 class="text-center">Signup</h1>
             <br>
             <form action="/signup" method="post">
                 {{ form.hidden_tag() }}
@@ -41,10 +48,37 @@
                 <br>
             </form>
             <br>
-            <p class="text-center">Already have an account? <a href="/login">Login</a></p>
+            <p class="text-center">Already have an account? <a class="link" href="/login">Login</a></p>
+            
+            {% elif request.endpoint == 'login' %}
+            
+            <div class="login-signup-btn">
+                <a href="/signup">Signup</a>
+                <a class="active" href="/login">Login</a>
+            </div>
             <br>
+            <h1 class="text-center">Log in</h1>
+            <br>
+            <form action="/login" method="post">
+                {{ form.hidden_tag() }}
+
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control") }}
+                <br>
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+                <br>
+                {{ form.submit(class="btn btn-dark") }}
+                <br>
+            </form>
+            <br>
+            <p>Forgot password? <a class="link" href="#">Reset Password</a></p>
+            <br>
+            <p class="text-center">Don't have an account? <a class="link" href="/signup">Sign up</a></p>
+
+            {% endif %}
         </div>
     </div>
 </div>
-
+<br>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "templates.html" %} 
+{% import "macros.html" as macro %}
+{% block title %} Jami Legacy - {{brandname}} {% endblock %}
+
+
+{% block main %}
+
+<div class="products-main-box">
+    <div class="product-container">
+        {% for product in products %}
+            {% if product["brand"] == brandname %}
+                {{ macro.product(image=product["image"], name=product["name"], sex=product["sex"], brand=product["brand"], price=product["price"]) }}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

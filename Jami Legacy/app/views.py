@@ -5,7 +5,7 @@ import json
 from sqlalchemy.inspection import inspect
 from datetime import datetime
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, EmailField
+from wtforms import StringField, PasswordField, SubmitField, EmailField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email
 
 
@@ -29,7 +29,7 @@ productInfo = [
     "price": "140",
     "sex": "Male",
     "image": "https://media.finishline.com/i/finishline/DQ8426_060_P1?$default$&w=671&&h=671&bg=rgb(237,237,237)",
-    "brand": "Jordan"
+    "brand": "Jordans"
     },
   {
     "name": "ADIDAS ORIGINALS OZWEEGO",
@@ -43,14 +43,14 @@ productInfo = [
     "price": "125",
     "sex": "Female",
     "image": "https://media.finishline.com/i/finishline/BQ6472_061_P1?$default$&w=671&&h=671&bg=rgb(237,237,237)",
-    "brand": "Jordan",
+    "brand": "Jordans",
    },
   {
     "name": "AIR JORDAN RETRO 13",
     "price": "200",
     "sex": "Male",
     "image": "https://media.finishline.com/i/finishline/DJ5982_041_P1?$default$&w=671&&h=671&bg=rgb(237,237,237)",
-    "brand": "Jordan",
+    "brand": "Jordans",
     },
   {
     "name": "MEN'S NEW BALANCE 2002R",
@@ -81,6 +81,7 @@ productInfo = [
     "brand": "Timberland",
     }
 ]
+
 
 class Serializer(object):
 
@@ -120,32 +121,62 @@ class Login(FlaskForm):
     submit = SubmitField('Submit')
 
 class Signup(FlaskForm):
-    firstname = StringField('First Name', validators=[DataRequired(), Length(max=30)])
-    lastname = StringField('Last Name', validators=[DataRequired(), Length(max=30)])
-    username = StringField('Username', validators=[DataRequired(), Length(min=8, max=30)])
+    firstname = StringField('First Name*', validators=[DataRequired(), Length(max=30)])
+    lastname = StringField('Last Name*', validators=[DataRequired(), Length(max=30)])
+    username = StringField('Username*', validators=[DataRequired(), Length(min=8, max=30)])
+    email = EmailField('Email Address*', validators=[DataRequired(), Email(), Length(max=30)])
+    password = PasswordField('Password*', validators=[DataRequired(), Length(min=8, max=80)])
+    submit = SubmitField('Submit')
+
+class Contact(FlaskForm):
+    yourname = StringField('Your Name', validators=[DataRequired(), Length(max=60)])
     email = EmailField('Email Address', validators=[DataRequired(), Email(), Length(max=30)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=80)])
+    subject = StringField('Subject', validators=[DataRequired(), Length(max=30)])
+    message = TextAreaField('Message', validators=[DataRequired(), Length(max=300)])
     submit = SubmitField('Submit')
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
   products = productInfo
-  user = None
-  if session.get("USERNAME", None) is not None:
-    user = session.get("USERNAME")
+  sort_brand = ""
+  sort_sex = ""
+  if request.method == "POST":
+    sort_brand = request.form.get("sort brand")
+    sort_sex = request.form.get("sort sex")
+    
   
-  return render_template("index.html", user = user, products= products,
+  return render_template("index.html", sort_brand=sort_brand, sort_sex=sort_sex, products= products,
   current_time = datetime.utcnow())
 
 @app.route("/products")
 def products():
     products = productInfo
-    user = None
-    if session.get("USERNAME", None) is not None:
-      user = session.get("USERNAME")
-    
-    return render_template("products.html", user = user, products= products)
+
+    return render_template("products.html", products= products)
+
+@app.route('/about-us')
+def about_us():
+  return render_template("about.html")
+
+@app.route('/contact-us')
+def contact_us():
+  form = Contact()
+  return render_template("contact.html", form=form)
+
+@app.route('/brands')
+def brands():
+  products = productInfo
+  for product in products:
+    brands_sort(product["brand"])
+  
+  return render_template("brand.html", products=products)
+
+@app.route('/brands/<string:brandname>')
+def brands_sort(brandname):
+  products = productInfo
+  
+  return render_template("brand-sort.html", brandname=brandname, products=products)
 
 @app.route("/carts")
 def cart():
@@ -158,6 +189,7 @@ def cart():
 @app.route('/login', methods=["GET", "POST"])
 def login():
   username = ""
+  session["USERNAME"]=""
   form = Login()
   if request.method == 'POST' and form.validate():
 
@@ -165,13 +197,13 @@ def login():
       username = form.username.data
       current_user = get_user_from_database(username)
       session["USERNAME"] = current_user["username"]
-      return redirect(url_for("profile"))
+      return redirect(url_for("profile", username=session["USERNAME"]))
 
     else:
       flash("Incorrect username or password")
       return redirect(request.url)
 
-  return render_template('login.html', username=username, form = form)
+  return render_template('signup.html', username=username, form = form)
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -197,19 +229,23 @@ def logout():
   session.pop("USERNAME", None)
   return redirect(url_for("login"))
 
-
-@app.route('/profile')
-def profile():
+@app.route('/profile/<string:username>')
+def profile(username):
   if session.get("USERNAME", None) is not None:
     username = session.get("USERNAME")
     cUser = get_user_from_database(username)
     user = cUser
-    return render_template('profile.html', user = user )
+    return render_template('profile.html', user = user)
 
-  else:
-    print("User not in session")
-    return redirect(url_for(login))
 
+@app.route('/profile/<string:username>/update-account')
+def update_account(username):
+    form = Signup()
+    if session.get("USERNAME", None) is not None:
+      username = session.get("USERNAME")
+      user = get_user_from_database(username)
+
+    return render_template('profile.html', user = user, form = form)
 
 def get_user_from_database(username):
     user = [user for user in Users.query.filter_by(username=username).all() 
