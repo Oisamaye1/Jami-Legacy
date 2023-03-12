@@ -11,6 +11,7 @@ from wtforms.validators import DataRequired, Length, Email
 
 productInfo = [
   {
+    "id": 1,
     "name": "MEN'S NIKE AIR FORCE 1",
     "price": "100",
     "sex": "Male",
@@ -18,6 +19,7 @@ productInfo = [
     "brand": "Nike"
     },
   {
+    "id": 2,
     "name": "NIKE AIR MAX 270",
     "price": "170",
     "sex": "Female",
@@ -25,6 +27,7 @@ productInfo = [
     "brand": "Nike",
     },
   {
+    "id": 3,
     "name": "AIR JORDAN RETRO 1",
     "price": "140",
     "sex": "Male",
@@ -32,6 +35,7 @@ productInfo = [
     "brand": "Jordans"
     },
   {
+    "id": 4,
     "name": "ADIDAS ORIGINALS OZWEEGO",
     "price": "100",
     "sex": "Male",
@@ -39,13 +43,15 @@ productInfo = [
     "brand": "Adidas",
     },
   {
-    "name": "AIR JORDAN RETRO 1",
+    "id": 5,
+    "name": "AIR JORDAN RETRO 2",
     "price": "125",
     "sex": "Female",
     "image": "https://media.finishline.com/i/finishline/BQ6472_061_P1?$default$&w=671&&h=671&bg=rgb(237,237,237)",
     "brand": "Jordans",
    },
   {
+    "id": 6,
     "name": "AIR JORDAN RETRO 13",
     "price": "200",
     "sex": "Male",
@@ -53,6 +59,7 @@ productInfo = [
     "brand": "Jordans",
     },
   {
+    "id": 7,
     "name": "MEN'S NEW BALANCE 2002R",
     "price": "140",
     "sex": "Male",
@@ -60,6 +67,7 @@ productInfo = [
     "brand": "New Balance",
     },
   {
+    "id": 8,
     "name": "CONVERSE RUN STAR MOTION",
     "price": "120",
     "sex": "Female",
@@ -67,6 +75,7 @@ productInfo = [
     "brand": "Converse",
     },
   {
+    "id": 9,
     "name": "CONVERSE RUN STAR HIKE",
     "price": "110",
     "sex": "Female",
@@ -74,6 +83,7 @@ productInfo = [
     "brand": "Converse",
     },
   {
+    "id": 9,
     "name": "TIMBERLAND 6 INCH",
     "price": "210",
     "sex": "Male",
@@ -83,7 +93,7 @@ productInfo = [
 ]
 
 
-class Serializer(object):
+class Serializer(object): 
 
     def serialize(self):
         return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
@@ -178,13 +188,19 @@ def brands_sort(brandname):
   
   return render_template("brand-sort.html", brandname=brandname, products=products)
 
+@app.route('/product-details/<string:name>')
+def product_details(name):
+   products = productInfo
+   name = name
+   return render_template("product-details.html", name = name, products=products)
+   
+
 @app.route("/carts")
 def cart():
   user = None
   if session.get("USERNAME", None) is not None:
     user = session.get("USERNAME")
   return render_template("carts.html", user=user)
-
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -246,6 +262,8 @@ def update_account(username):
       user = get_user_from_database(username)
 
     return render_template('profile.html', user = user, form = form)
+
+
 
 def get_user_from_database(username):
     user = [user for user in Users.query.filter_by(username=username).all() 

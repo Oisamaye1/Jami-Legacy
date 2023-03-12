@@ -1,0 +1,12 @@
+{% extends "templates.html" %}
+{% block title %} Carts {% endblock %}
+
+{% block main %}
+<div class="prod-info">
+    {% for product in products %}
+        {% if product['name'] == name %}
+        <img class="" src="{{product['image']}}" alt="product images">
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

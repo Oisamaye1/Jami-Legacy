@@ -12,6 +12,8 @@ body{
     background-color: rgb(255, 255, 255);
 }
 
+
+
 .navbar{
     background-color: white;
 }
@@ -156,6 +158,10 @@ body{
     width: 30%;
 }
 
+.product-box a{
+    text-decoration: none;
+}
+
 .product-box:hover{
     box-shadow: 10px 10px 20px rgba(156, 156, 156, 0.397);
     transition: 0.3s;
@@ -177,22 +183,27 @@ position: relative;
     color: rgb(138, 138, 138);
 }
 
+.prod-info h4{
+    color: #FF7005;
+}
+
 .prod-info h5{
     color: #033C2B;
+    font-size: 25px;
    
 }
 
 .prod-info .product-box-cart{
     padding: 5px 15px;
     color: #033C2B;
-    font-size: 25px;
+    font-size: 30px;
     position: absolute;
     bottom: 5px;
     right: 10px;
 }
 
 .prod-info .product-box-cart:hover{
-    font-size: 30px;
+    scale: 1.2;
 }
 
 .button{
